@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welson David — Portfólio de Serviços</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #EAF6FB;
+    --bg-alt: #DCEEF6;
+    --petrol: #0B3654;
+    --petrol-2: #123F5C;
+    --blue: #2C7DA0;
+    --ink: #10202B;
+    --paper: #F7FBFD;
+    --accent: #F2994A;
+    --radius: 22px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{ font-family:'Sora', sans-serif; }
+
+  /* ---- background arcs (signature motif) ---- */
+  .arcs{position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:0;}
+  .arcs svg{position:absolute;}
+
+  /* ---- nav ---- */
+  header{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 6vw;
+    background:rgba(234,246,251,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(11,54,84,0.08);
+  }
+  .logo{ font-weight:800; font-size:1.05rem; letter-spacing:0.5px; display:flex; align-items:center; gap:8px;}
+  .logo .arrow{ display:inline-block; transform:rotate(45deg); color:var(--petrol); font-size:1.2rem;}
+  nav ul{ list-style:none; display:flex; gap:34px; }
+  nav a{
+    text-decoration:none; color:var(--petrol); font-weight:600; font-size:0.88rem;
+    letter-spacing:0.08em; text-transform:uppercase; opacity:0.65; transition:opacity .2s;
+  }
+  nav a:hover, nav a:focus-visible{ opacity:1; }
+  .nav-toggle{ display:none; background:none; border:none; font-size:1.6rem; color:var(--petrol); cursor:pointer; }
+
+  section{ position:relative; padding:110px 6vw; }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:0.78rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--blue); margin-bottom:18px;
+  }
+  .eyebrow::before{ content:"↗"; color:var(--accent); font-weight:800; }
+
+  /* ---- hero ---- */
+  #hero{
+    min-height:88vh; display:flex; align-items:center;
+    padding-top:60px;
+  }
+  .hero-grid{
+    display:grid; grid-template-columns: 1.15fr 0.85fr; gap:60px; align-items:center;
+    width:100%; position:relative; z-index:1;
+  }
+  .hero-title{
+    font-size:clamp(2.6rem, 6vw, 4.6rem);
+    font-weight:800; line-height:1.02; color:var(--petrol);
+  }
+  .hero-title .thin{ font-weight:400; color:var(--blue); display:block; font-size:0.5em; letter-spacing:0.15em; margin-bottom:10px;}
+  .hero-sub{
+    margin-top:26px; font-size:1.1rem; line-height:1.6; max-width:520px; color:#2c4a5c;
+  }
+  .btn{
+    margin-top:36px; display:inline-flex; align-items:center; gap:10px;
+    background:var(--petrol); color:#fff; border:none; padding:16px 30px;
+    border-radius:100px; font-weight:600; font-size:0.95rem; cursor:pointer;
+    text-decoration:none; transition:transform .25s ease, background .25s ease;
+  }
+  .btn:hover{ background:var(--blue); transform:translateY(-2px); }
+  .btn .arrow{ transition:transform .25s ease; }
+  .btn:hover .arrow{ transform:translate(3px,-3px); }
+
+  .hero-portrait{
+    position:relative; display:flex; justify-content:center;
+  }
+  .portrait-frame{
+    width:min(340px, 80%); aspect-ratio:4/5; border-radius:28px;
+    background:var(--petrol); position:relative; overflow:hidden;
+    box-shadow: 0 30px 60px -20px rgba(11,54,84,0.4);
+  }
+  .portrait-frame img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+  .portrait-tag{
+    position:absolute; bottom:-18px; left:50%; transform:translateX(-50%);
+    background:var(--paper); border-radius:100px; padding:10px 22px;
+    font-weight:700; font-size:0.85rem; color:var(--petrol);
+    box-shadow:0 10px 30px -10px rgba(11,54,84,0.25); white-space:nowrap;
+  }
+
+  /* ---- fade-in ---- */
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* ---- about ---- */
+  #sobre{ background:var(--paper); }
+  .about-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:70px; align-items:start;}
+  .about-grid p{ font-size:1.15rem; line-height:1.75; color:#2c4a5c; margin-top:10px;}
+  .meta-blocks{ display:flex; flex-direction:column; gap:22px; }
+  .meta-block{ background:var(--bg-alt); border-radius:18px; padding:22px 26px; }
+  .meta-block h4{ font-size:0.8rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--blue); margin-bottom:10px; font-weight:700;}
+  .meta-block ul{ list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .meta-block li{ font-size:0.95rem; color:var(--ink); }
+  .meta-block li b{ color:var(--petrol); }
+  .tools{ display:flex; flex-wrap:wrap; gap:8px; }
+  .tool-pill{
+    background:#fff; border:1px solid rgba(11,54,84,0.12); border-radius:100px;
+    padding:6px 14px; font-size:0.82rem; font-weight:600; color:var(--petrol);
+  }
+
+  /* ---- services ---- */
+  h2.section-title{ font-size:clamp(2rem,4vw,2.8rem); color:var(--petrol); margin-bottom:14px; }
+  .section-lead{ font-size:1.05rem; color:#3d5a6c; max-width:600px; margin-bottom:56px; }
+  .services-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  .service-card{
+    background:var(--paper); border-radius:var(--radius); padding:32px 28px;
+    border:1px solid rgba(11,54,84,0.07);
+    transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .service-card:hover{ transform:translateY(-6px); box-shadow:0 24px 50px -24px rgba(11,54,84,0.3); }
+  .service-num{ font-family:'Sora'; font-weight:800; font-size:0.85rem; color:var(--accent); margin-bottom:16px; }
+  .service-card h3{ font-size:1.15rem; color:var(--petrol); margin-bottom:10px; }
+  .service-card p{ font-size:0.92rem; color:#4a6577; line-height:1.55; }
+
+  /* ---- experience ---- */
+  #experiencias{ background:var(--paper); }
+  .exp-list{ display:flex; flex-direction:column; }
+  .exp-item{
+    display:grid; grid-template-columns: 220px 1fr; gap:40px;
+    padding:38px 0; border-top:1px solid rgba(11,54,84,0.1);
+  }
+  .exp-item:last-child{ border-bottom:1px solid rgba(11,54,84,0.1); }
+  .exp-org{ font-family:'Sora'; font-weight:700; font-size:1.3rem; color:var(--petrol); }
+  .exp-role{ font-size:0.85rem; color:var(--blue); font-weight:600; margin-top:6px; }
+  .exp-body ul{ list-style:none; display:flex; flex-direction:column; gap:8px; }
+  .exp-body li{ font-size:0.97rem; line-height:1.6; color:#2c4a5c; padding-left:20px; position:relative;}
+  .exp-body li::before{ content:"—"; position:absolute; left:0; color:var(--accent); font-weight:700;}
+  .exp-stat{
+    display:inline-block; margin-top:14px; background:var(--bg-alt); color:var(--petrol);
+    font-weight:700; font-size:0.82rem; padding:6px 14px; border-radius:100px;
+  }
+  .exp-mini{ margin-top:34px; }
+  .exp-mini h4{ font-size:0.8rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--blue); margin-bottom:14px; }
+  .exp-mini-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .exp-mini-card{ background:var(--bg-alt); border-radius:16px; padding:18px 20px; }
+  .exp-mini-card b{ display:block; color:var(--petrol); font-size:0.95rem; margin-bottom:4px;}
+  .exp-mini-card span{ font-size:0.85rem; color:#4a6577; }
+
+  /* ---- contact ---- */
+  #contato{
+    background:var(--petrol); color:#fff; border-radius:36px; margin:0 4vw 70px; padding:90px 6vw;
+  }
+  #contato .eyebrow{ color:#8fd4e8; }
+  #contato .eyebrow::before{ color:var(--accent); }
+  #contato h2{ font-size:clamp(2.2rem,5vw,3.4rem); line-height:1.05; }
+  #contato h2 b{ color:var(--accent); }
+  .contact-grid{ display:grid; grid-template-columns:1.2fr 1fr; gap:60px; margin-top:50px; align-items:end;}
+  .contact-links{ display:flex; flex-direction:column; gap:18px; }
+  .contact-links a{
+    color:#fff; text-decoration:none; font-size:1.1rem; font-weight:600;
+    display:flex; align-items:center; gap:12px; opacity:0.9; transition:opacity .2s;
+  }
+  .contact-links a:hover{ opacity:1; color:var(--accent); }
+  .contact-links .icon{ width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; font-size:1rem;}
+
+  footer{ text-align:center; padding:30px; font-size:0.82rem; color:#6c8494; }
+
+  @media (max-width: 880px){
+    .hero-grid, .about-grid, .contact-grid{ grid-template-columns:1fr; }
+    .hero-portrait{ order:-1; margin-bottom:20px;}
+    .services-grid{ grid-template-columns:1fr 1fr; }
+    .exp-item{ grid-template-columns:1fr; gap:10px; }
+    .exp-mini-grid{ grid-template-columns:1fr; }
+    nav ul{
+      position:fixed; inset:70px 0 0 0; background:var(--bg); flex-direction:column;
+      align-items:center; justify-content:center; gap:36px; transform:translateY(-110%);
+      transition:transform .35s ease; z-index:40;
+    }
+    nav ul.open{ transform:translateY(0); }
+    nav a{ font-size:1.1rem; }
+    .nav-toggle{ display:block; }
+    #contato{ margin:0 0 0; border-radius:0; }
+  }
+  @media (max-width:560px){ .services-grid{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><span class="arrow">→</span> Welson David</div>
+  <button class="nav-toggle" aria-label="Abrir menu">☰</button>
+  <nav><ul>
+    <li><a href="#sobre">Quem sou eu</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#experiencias">Experiências</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul></nav>
+</header>
+
+<section id="hero">
+  <div class="arcs">
+    <svg width="900" height="900" style="right:-250px; top:-100px;" viewBox="0 0 900 900"><circle cx="450" cy="450" r="440" fill="none" stroke="#0B3654" stroke-opacity="0.06" stroke-width="2"/><circle cx="450" cy="450" r="360" fill="none" stroke="#0B3654" stroke-opacity="0.06" stroke-width="2"/><circle cx="450" cy="450" r="280" fill="none" stroke="#0B3654" stroke-opacity="0.06" stroke-width="2"/></svg>
+  </div>
+  <div class="hero-grid">
+    <div class="reveal in">
+      <h1 class="hero-title"><span class="thin">Administrador · Conteúdo &amp; Marketing</span>Organização, estratégia e criatividade em movimento.</h1>
+      <p class="hero-sub">Bacharel em Administração pela UEMA, atuo unindo gestão de processos, comunicação e criação de conteúdo para fortalecer marcas e equipes.</p>
+      <a href="#experiencias" class="btn">Ver experiências <span class="arrow">↗</span></a>
+    </div>
+    <div class="hero-portrait">
+      <div class="portrait-frame"><img src="foto-perfil.jpg" alt="Welson David Ferreira Costa"></div>
+      <div class="portrait-tag">Welson David Ferreira Costa</div>
+    </div>
+  </div>
+</section>
+
+<section id="sobre">
+  <div class="about-grid">
+    <div class="reveal">
+      <div class="eyebrow">Quem sou eu</div>
+      <h2 class="section-title">Do processo à narrativa.</h2>
+      <p>Sou <b>Welson David Ferreira Costa</b>, bacharel em Administração pela UEMA. Tenho experiência com análise de processos, gestão administrativa e planejamento de marketing. Minha missão é unir organização, estratégia e criatividade para desenvolver soluções eficientes, que melhorem resultados e fortaleçam a comunicação e o desempenho das equipes e projetos onde atuo.</p>
+    </div>
+    <div class="reveal meta-blocks">
+      <div class="meta-block">
+        <h4>Formação acadêmica</h4>
+        <ul><li><b>Bacharelado em Administração de Empresas</b> — Universidade Estadual do Maranhão (UEMA)</li></ul>
+      </div>
+      <div class="meta-block">
+        <h4>Capacitações</h4>
+        <ul>
+          <li><b>Power BI Básico</b> — Hashtag Treinamentos, 2025</li>
+          <li><b>Relações Humanas, Motivação e Liderança</b> — G4 Educação, 2019</li>
+          <li><b>Pacote Office Completo</b> — RR Informática, 2017</li>
+        </ul>
+      </div>
+      <div class="meta-block">
+        <h4>Ferramentas</h4>
+        <div class="tools">
+          <span class="tool-pill">Figma</span><span class="tool-pill">Pipefy</span>
+          <span class="tool-pill">CapCut</span><span class="tool-pill">Miro</span>
+          <span class="tool-pill">ChatGPT</span><span class="tool-pill">WordPress</span>
+          <span class="tool-pill">Canva</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="servicos">
+  <div class="reveal">
+    <div class="eyebrow">Serviços</div>
+    <h2 class="section-title">O que eu entrego</h2>
+    <p class="section-lead">Serviços aplicados diretamente em empresas, distribuidoras e projetos institucionais — do roteiro ao resultado.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal"><div class="service-num">01</div><h3>Criação de conteúdo</h3><p>Roteiros, posts e campanhas para redes sociais com tom humano e direto ao ponto.</p></div>
+    <div class="service-card reveal"><div class="service-num">02</div><h3>Roteiro de vídeo</h3><p>Reels institucionais e promocionais, do gancho ao fechamento.</p></div>
+    <div class="service-card reveal"><div class="service-num">03</div><h3>Comunicação interna</h3><p>Ações de endomarketing e engajamento de equipes.</p></div>
+    <div class="service-card reveal"><div class="service-num">04</div><h3>Planejamento de eventos</h3><p>Organização e execução de eventos internos e externos de grande porte.</p></div>
+    <div class="service-card reveal"><div class="service-num">05</div><h3>Marketing digital</h3><p>Planejamento e gestão de campanhas e presença digital multicanal.</p></div>
+    <div class="service-card reveal"><div class="service-num">06</div><h3>Gestão de processos</h3><p>Organização de fluxo de trabalho e projetos (Kanban) do briefing à entrega.</p></div>
+  </div>
+</section>
+
+<section id="experiencias">
+  <div class="reveal">
+    <div class="eyebrow">Experiências</div>
+    <h2 class="section-title">Onde já apliquei</h2>
+  </div>
+
+  <div class="exp-list">
+    <div class="exp-item reveal">
+      <div><div class="exp-org">ROFE</div><div class="exp-role">Distribuidora</div></div>
+      <div class="exp-body">
+        <ul>
+          <li>Comunicação interna e ações de endomarketing</li>
+          <li>Planejamento e criação de conteúdo para redes sociais e campanhas promocionais</li>
+          <li>Organização de eventos internos e externos de grande porte, como a Feira de Negócios</li>
+          <li>Apoio na confecção de contratos e materiais institucionais</li>
+          <li>Conteúdos personalizados para marcas parceiras: Vox Ferramentas e Tintas Viva</li>
+        </ul>
+        <span class="exp-stat">Página com 26.566 seguidores</span>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div><div class="exp-org">Mútua-MA</div></div>
+      <div class="exp-body">
+        <ul>
+          <li>Análise de benefícios e processos administrativos</li>
+          <li>Organização e execução de eventos institucionais</li>
+          <li>Contato direto com entidades de classe, associados e programas da instituição</li>
+          <li>Apoio em processos de licitação</li>
+          <li>Gestão da rede social da regional e participação no programa Divulga Mútua</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div><div class="exp-org">EJAD</div><div class="exp-role">Consultoria</div></div>
+      <div class="exp-body">
+        <ul>
+          <li>Atuação como analista, gerente e diretor de marketing</li>
+          <li>Criação de conteúdos, campanhas e eventos</li>
+          <li>Coordenador geral na 9ª edição da SEAD (colaborou também na 7ª e 8ª)</li>
+          <li>Venda e desenvolvimento de serviços empresariais: planos de negócio, planos de marketing e consultorias</li>
+          <li>Participação em eventos do movimento empresa júnior, como o ENEJ, e treinamentos de marketing para novos membros</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div><div class="exp-org">Vórtex Racing</div></div>
+      <div class="exp-body">
+        <ul>
+          <li>Vice-capitão e diretor de Gestão do projeto Fórmula SAE da UEMA</li>
+          <li>Gerenciamento de projetos, organizando o Kanban e o fluxo de processos na criação do protótipo estilo Fórmula 1</li>
+          <li>Reformulação do posicionamento no Instagram, com criação de conteúdos, vídeos e Reels</li>
+          <li>Apoio na promoção da marca e na captação de patrocínios</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="exp-mini reveal">
+    <h4>Outras experiências</h4>
+    <div class="exp-mini-grid">
+      <div class="exp-mini-card"><b>IBAPE Maranhão</b><span>Atuação eventual como freelancer cuidando de redes sociais, site e organização de eventos e tarefas administrativas.</span></div>
+      <div class="exp-mini-card"><b>Trechos Turcos</b><span>Criador da página de conteúdo voltada para séries turcas e conteúdos do gênero.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="contato">
+  <div class="eyebrow">Contato</div>
+  <div class="contact-grid">
+    <h2 class="reveal">Vamos <b>trabalhar<br>juntos?</b></h2>
+    <div class="contact-links reveal">
+      <a href="tel:+5598984954812"><span class="icon">☎</span> (98) 98495-4812</a>
+      <a href="mailto:welsondavid24@gmail.com"><span class="icon">✉</span> welsondavid24@gmail.com</a>
+      <a href="https://www.linkedin.com/in/welson-david-734740245/" target="_blank" rel="noopener"><span class="icon">in</span> linkedin.com/in/welson-david</a>
+    </div>
+  </div>
+</section>
+
+<footer>© Welson David Ferreira Costa</footer>
+
+<script>
+  const toggle = document.querySelector('.nav-toggle');
+  const navList = document.querySelector('nav ul');
+  toggle.addEventListener('click', () => navList.classList.toggle('open'));
+  navList.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navList.classList.remove('open')));
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
